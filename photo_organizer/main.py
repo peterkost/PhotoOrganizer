@@ -1,12 +1,12 @@
 from file_reader import getFilesInArgDir 
-from file_sorter import sortFiles
-from photo_processor import processImages
-from video_processor import processVideos
+#from file_sorter import sortFiles
+#from photo_processor import processImages
+#from video_processor import processVideos
 
 def main():
     filePaths = getFilesInArgDir()
-    print(filePaths)
     #groupedFiles = sortFiles(filePaths)
+    #print(filePaths)
     #processedPhotos = processImages(groupedFiles)
     #processedVideos = processImages(groupedFiles)
 

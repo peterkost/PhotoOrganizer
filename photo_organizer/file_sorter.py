@@ -1,6 +1,6 @@
 from enums import FileType
 
-def sortFiles(filePaths):
+def sortFiles(filePaths: list[str]) -> FilePaths:
     return filePaths
     
 
