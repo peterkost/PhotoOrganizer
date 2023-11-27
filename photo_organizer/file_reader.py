@@ -1,22 +1,23 @@
 import argparse
 import os
 
-def readFilePaths() -> list[str]:
-    folderPath = _getFolderPath()
-    filesInPaths = _getFilesInPath(folderPath)
-    return filesInPaths 
+
+def getFilesInArgDir() -> list[str]:
+    dir = _getDir()
+    filePaths = _getPathsOfFilesIn(dir)
+    return filePaths 
 
 
-def _getFolderPath() -> str:
+def _getDir() -> str:
     parser = argparse.ArgumentParser(
         description="Get files in current directory.")
     parser.add_argument("folder_path", type=str,
-                        help="Path to folder containing image files.")
+                        help="Path to folder containing media files.")
     args = parser.parse_args()
     return args.folder_path
 
 
-def _getFilesInPath(dir: str) -> list[str]:
+def _getPathsOfFilesIn(dir: str) -> list[str]:
     try:
         files = os.listdir(dir)
         return [dir + "/" + file for file in files]
