@@ -3,3 +3,6 @@ class FilePaths:
         self.photos = photos
         self.videos = videos
         self.other = other
+
+    def __str__(self) -> str:
+        return f"{len(self.photos)} photos\n{len(self.videos)} videos\n{len(self.other)} others"
