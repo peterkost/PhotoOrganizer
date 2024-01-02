@@ -1,14 +1,14 @@
 from misc.FileType import FileType
 
-PHOTO_EXTS = set(["HEIC", "PNG", "JPG"])
-VIDEO_EXTS = set(["MP4", "MOV"])
+PHOTO_EXTS = {"HEIC", "PNG", "JPG"}
+VIDEO_EXTS = {"MP4", "MOV"}
 
 class FilePath:
     def __init__(self, dir: str, name: str, ext: str):
         self.dir = dir
         self.name = name
         self.ext = ext
-        self.path = dir + name + "." + ext
+        self.path = dir + "/" + name + "." + ext
         self.ty = self._getFileTypeOf(ext)
     
     @staticmethod
