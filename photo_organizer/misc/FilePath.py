@@ -1,15 +1,17 @@
+from dataclasses import dataclass
 from misc.FileType import FileType
 
-PHOTO_EXTS = {"HEIC", "PNG", "JPG"}
-VIDEO_EXTS = {"MP4", "MOV"}
+PHOTO_EXTS = {"heic", "png", "jpg", "jpeg"}
+VIDEO_EXTS = {"mp4", "mov"}
 
+@dataclass
 class FilePath:
     def __init__(self, dir: str, name: str, ext: str):
         self.dir = dir
         self.name = name
-        self.ext = ext
+        self.ext = ext.lower()
         self.path = dir + "/" + name + "." + ext
-        self.ty = self._getFileTypeOf(ext)
+        self.ty = self._getFileTypeOf(self.ext)
     
     @staticmethod
     def _getFileTypeOf(ext: str) -> FileType:
