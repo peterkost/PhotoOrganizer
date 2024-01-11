@@ -23,8 +23,12 @@ def _getPathsOfFilesIn(dir: str) -> list[FilePath]:
         filePaths = []
         files = os.listdir(dir)
         for file in files:
-            name, ext = os.path.splitext(file)
-            filePaths.append(FilePath(dir, name, ext[1:]))
+            d = f"{dir}/{file}"
+            if os.path.isdir(d):
+                filePaths += _getPathsOfFilesIn(d)
+            else:
+                name, ext = os.path.splitext(file)
+                filePaths.append(FilePath(dir, name, ext[1:]))
         return filePaths
     except Exception as e:
         print(e)
