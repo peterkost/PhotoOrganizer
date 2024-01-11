@@ -1,47 +1,39 @@
+from typing import List
 from file_reader import getFilesInArgDir 
 from file_sorter import sortFiles
+from misc.Photo import Photo
 from photo_processor import addMetaDataToPhotos
 from pillow_heif import register_heif_opener
 import pickle
 #from video_processor import processVideos
 
 
-usePickle = True
+usePickledPhotos= True
+pickledPhotoListName = 'photoList.p'
 
 
 def main():
-    register_heif_opener()
-
-    
-    if usePickle:
-        groupedFiles = unpickle()
-        
+    if usePickledPhotos:
+        photos = unpicklePhotos()
     else:
         filePaths = getFilesInArgDir()
-        groupedFiles = sortFiles(filePaths)
-        funniestShitIveEverSeen(groupedFiles)
+        register_heif_opener()
+        photos = sortFiles(filePaths)
+        picklePhotos(photos=photos)
 
-    noDate = date = 0
-    for photo in groupedFiles:
-        if not photo.dateTime:
-            noDate += 1
-            print(photo.paths[0].path)
-        else:
-            date += 1
-    #processedPhotos = addMetaDataToPhotos(groupedFiles.photos)
-    print("date", date, "nodate", noDate)
+    processedPhotos = addMetaDataToPhotos(photos)
 
 
-def funniestShitIveEverSeen(obj):
-    file = open('funnestShitIveEverSeen', 'ab')
-    pickle.dump(obj, file)
+def picklePhotos(photos: List[Photo]) -> None:
+    file = open(pickledPhotoListName, 'ab')
+    pickle.dump(photos, file)
     file.close()
 
-def unpickle():
-    file = open("funnestShitIveEverSeen", 'rb')
-    p = pickle.load(file)
+def unpicklePhotos() -> List[Photo]:
+    file = open(pickledPhotoListName, 'rb')
+    photos = pickle.load(file)
     file.close()
-    return p
+    return photos
 
 if __name__ == "__main__":
     main()

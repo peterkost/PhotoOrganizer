@@ -1,7 +1,6 @@
 from pillow_heif import register_heif_opener
 from datetime import datetime
+from misc.Photo import Photo
 
-from misc.FilePath import FilePath
-
-def addMetaDataToPhotos(filePaths: list[FilePath]):
-    pass
+def addMetaDataToPhotos(filePaths: list[Photo]):
+    print('photo count', len(filePaths))
