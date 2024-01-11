@@ -11,10 +11,11 @@ class Photo:
         self.isLive = len(paths) > 1
         self.photoPath = next(path for path in paths if path.ty == FileType.PHOT0)
         self.videoPath = next((path.ty == FileType.VIDEO for path in paths), None)
-        self.setDateTime()
+        self._setDateTime()
+        self._setNewPath()
 
 
-    def setDateTime(self):
+    def _setDateTime(self):
             try:
                 image = Image.open(self.photoPath.path)
                 exif = image.getexif()
@@ -25,6 +26,14 @@ class Photo:
             except Exception as e:
                 print(f"Error getting date for {self.photoPath.name}", e)
                 self.dateTime = None
+
+
+    def _setNewPath(self):
+        if self.dateTime:
+            self.newPath = f"{self.photoPath.root}/{self.dateTime.year}/{self.dateTime.strftime('%m-%B')}"
+        else:
+            self.newPath = "No dateTime"
+
 
     def __str__(self):
         return f"{self.photoPath.name} - {self.dateTime}"

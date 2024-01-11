@@ -6,12 +6,13 @@ VIDEO_EXTS = {"mp4", "mov"}
 
 @dataclass
 class FilePath:
-    def __init__(self, dir: str, name: str, ext: str):
+    def __init__(self, dir: str, name: str, ext: str, root: str):
         self.dir = dir
         self.name = name
         self.ext = ext.lower()
         self.path = dir + "/" + name + "." + ext
         self.ty = self._getFileTypeOf(self.ext)
+        self.root = root
     
     @staticmethod
     def _getFileTypeOf(ext: str) -> FileType:
