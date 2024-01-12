@@ -1,8 +1,9 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import List
 from misc.FilePath import FilePath
 from misc.FileType import FileType
 from PIL import Image
+import re
 
 
 class Photo:
@@ -32,9 +33,25 @@ class Photo:
         if self.dateTime:
             self.newPath = f"{self.photoPath.root}/{self.dateTime.year}/{self.dateTime.strftime('%m-%B')}"
         else:
-            self.newPath = "No dateTime"
+            year = self._guessYear()
+            self.newPath = f"{self.photoPath.root}{'/' + year if year else ''}/Undated"
 
+    def _guessYear(self) -> str:
+        dir = self.photoPath.dir
+        
+        yearRegex = re.compile(r'^(1|2)\d{3}$')
+        for s in dir.split('/'):
+            if yearRegex.match(s):
+                return s
+        return ''
+    
+    
+    def setNewFileName(self, name):
+        self.newFileName = name
 
     def __str__(self):
         return f"{self.photoPath.name} - {self.dateTime}"
 
+    
+    def __lt__(self, other):
+        return self.dateTime < other.dateTime
