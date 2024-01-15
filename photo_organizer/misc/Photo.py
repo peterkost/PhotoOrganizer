@@ -36,6 +36,7 @@ class Photo:
             year = self._guessYear()
             self.newPath = f"{self.photoPath.root}{'/' + year if year else ''}/Undated"
 
+
     def _guessYear(self) -> str:
         dir = self.photoPath.dir
         
@@ -46,12 +47,22 @@ class Photo:
         return ''
     
     
-    def setNewFileName(self, name):
-        self.newFileName = name
+    def setNewFileName(self, index: int):
+        if self.dateTime:
+            self.newFileName = f"{self.dateTime.strftime('%Y_%m_%d')}-{index:03d}"
+        else:
+            self.newFileName = f"{index:03d}"
+
+
+    def getDateStr(self):
+        return self.dateTime if self.dateTime else ""
+
 
     def __str__(self):
         return f"{self.photoPath.name} - {self.dateTime}"
 
     
     def __lt__(self, other):
-        return self.dateTime < other.dateTime
+        a = self.dateTime if self.dateTime else datetime(1970, 6, 2)
+        b = other.dateTime if other.dateTime else datetime(1970, 6, 2)
+        return a < b

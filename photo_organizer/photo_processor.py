@@ -7,11 +7,18 @@ def generateFoldersFor(photos: list[Photo]):
     for p in photos:
         dirs[p.newPath].append(p)
 
-    for dir, ps in dirs.items():
+    for ps in dirs.values():
         ps.sort()
         for i, e in enumerate(ps):
-            name = f"{e.dateTime.strftime('%Y.%m.%d')}-IMG_{i:03d}"
-            e.setNewFileName(name)
-            print(name)
+            e.setNewFileName(i+1)
 
-        break
+
+    i = 0
+    while i < 20:
+        p = photos[i]
+        newPath = f"{p.newPath}/{p.newFileName}.{p.photoPath.ext}"
+        print(newPath)
+
+        i += 1
+
+
