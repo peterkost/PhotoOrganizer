@@ -1,13 +1,13 @@
 from datetime import datetime
 from typing import List
-from misc.FilePath import FilePath
+from misc.FileInfo import FileInfo
 from misc.FileType import FileType
 from PIL import Image
 import re
 
 
 class Photo:
-    def __init__(self, paths: List[FilePath]):
+    def __init__(self, paths: List[FileInfo]):
         self.paths = paths
         self.isLive = len(paths) > 1
         self.photoPath = next(path for path in paths if path.ty == FileType.PHOT0)

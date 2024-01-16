@@ -1,12 +1,11 @@
 from typing import DefaultDict, List
-from misc.FilePaths import FilePaths
-from misc.FilePath import FilePath
+from misc.FileInfo import FileInfo
 from misc.FileType import FileType
 from misc.Photo import Photo
 from tqdm import tqdm
 
 
-def sortFiles(filePaths: list[FilePath]) -> List[Photo]:
+def sortFiles(filePaths: list[FileInfo]) -> List[Photo]:
     files = DefaultDict(list)
 
     for filePath in filePaths:

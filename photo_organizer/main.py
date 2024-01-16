@@ -8,7 +8,7 @@ import pickle
 import argparse
 
 
-usePickledPhotos= True
+usePickledPhotos= False 
 pickledPhotoListName = 'photoList.p'
 
 def main():

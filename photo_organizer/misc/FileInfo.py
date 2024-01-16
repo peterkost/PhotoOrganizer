@@ -5,7 +5,7 @@ PHOTO_EXTS = {"heic", "png", "jpg", "jpeg"}
 VIDEO_EXTS = {"mp4", "mov"}
 
 @dataclass
-class FilePath:
+class FileInfo:
     def __init__(self, dir: str, name: str, ext: str, root: str):
         self.dir = dir
         self.name = name

@@ -1,8 +1,8 @@
 import os
 
-from misc.FilePath import FilePath
+from misc.FileInfo import FileInfo
 
-def getPathsOfFilesIn(dir: str, rootDir: str) -> list[FilePath]:
+def getPathsOfFilesIn(dir: str, rootDir: str) -> list[FileInfo]:
     try:
         filePaths = []
         files = os.listdir(dir)
@@ -12,7 +12,7 @@ def getPathsOfFilesIn(dir: str, rootDir: str) -> list[FilePath]:
                 filePaths += getPathsOfFilesIn(d, rootDir)
             else:
                 name, ext = os.path.splitext(file)
-                filePaths.append(FilePath(dir, name, ext[1:], rootDir))
+                filePaths.append(FileInfo(dir, name, ext[1:], rootDir))
         return filePaths
     except Exception as e:
         print(e)
