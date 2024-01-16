@@ -1,6 +1,5 @@
 from collections import defaultdict
 from misc.Photo import Photo
-import re
 
 def generateFoldersFor(photos: list[Photo]):
     dirs = defaultdict(list)
@@ -16,7 +15,7 @@ def generateFoldersFor(photos: list[Photo]):
     i = 0
     while i < 20:
         p = photos[i]
-        newPath = f"{p.newPath}/{p.newFileName}.{p.photoPath.ext}"
+        newPath = f"{p.newPath}/{p.newFileName}.{p.photoPath.extension}"
         print(newPath)
 
         i += 1

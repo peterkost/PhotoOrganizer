@@ -9,16 +9,25 @@ import re
 class Photo:
     def __init__(self, paths: List[FileInfo]):
         self.paths = paths
-        self.isLive = len(paths) > 1
-        self.photoPath = next(path for path in paths if path.ty == FileType.PHOT0)
-        self.videoPath = next((path.ty == FileType.VIDEO for path in paths), None)
+        if len(paths) == 1:
+            self.photoPath = paths[0]
+            self.videoPath = None
+        else:
+            self.photoPath = next(path for path in paths if path.fileType == FileType.PHOT0)
+            self.videoPath = next((path.fileType == FileType.VIDEO for path in paths), None)
+        
+        if not self.photoPath:
+            for p in paths:
+                print(p)
+            raise Exception("Tried to init a photo without photo path, ^^^")
+
         self._setDateTime()
         self._setNewPath()
 
 
     def _setDateTime(self):
             try:
-                image = Image.open(self.photoPath.path)
+                image = Image.open(self.photoPath.fullPath)
                 exif = image.getexif()
                 if 306 in exif:
                     self.dateTime = datetime.strptime(exif[306],'%Y:%m:%d %H:%M:%S')
@@ -31,14 +40,14 @@ class Photo:
 
     def _setNewPath(self):
         if self.dateTime:
-            self.newPath = f"{self.photoPath.root}/{self.dateTime.year}/{self.dateTime.strftime('%m-%B')}"
+            self.newPath = f"{self.photoPath.rootFolder}/{self.dateTime.year}/{self.dateTime.strftime('%m-%B')}"
         else:
             year = self._guessYear()
-            self.newPath = f"{self.photoPath.root}{'/' + year if year else ''}/Undated"
+            self.newPath = f"{self.photoPath.rootFolder}{'/' + year if year else ''}/Undated"
 
 
     def _guessYear(self) -> str:
-        dir = self.photoPath.dir
+        dir = self.photoPath.folder
         
         yearRegex = re.compile(r'^(1|2)\d{3}$')
         for s in dir.split('/'):

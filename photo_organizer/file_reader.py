@@ -1,6 +1,6 @@
 import os
-
 from misc.FileInfo import FileInfo
+
 
 def getPathsOfFilesIn(dir: str, rootDir: str) -> list[FileInfo]:
     try:
