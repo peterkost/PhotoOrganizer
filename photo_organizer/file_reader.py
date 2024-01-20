@@ -1,21 +1,34 @@
 import os
-from misc.FileInfo import FileInfo
+import argparse
+from misc.FilePath import FilePath
+from typing import List
 
 
-def getPathsOfFilesIn(dir: str, rootDir: str) -> list[FileInfo]:
+def getFilesInArgDir() -> List[FilePath]:
+    argDir = getDirFromArgs()
+    return getFiles(argDir)
+
+
+def getDirFromArgs() -> str:
+    parser = argparse.ArgumentParser(
+        description="Get files in current directory.")
+    parser.add_argument("folder_path", type=str,
+                        help="Path to folder containing media files.")
+    args = parser.parse_args()
+    return args.folder_path
+
+
+def getFiles(dir: str) -> List[FilePath]:
+    filePaths = []
     try:
-        filePaths = []
         files = os.listdir(dir)
         for file in files:
-            d = f"{dir}/{file}"
-            if os.path.isdir(d):
-                filePaths += getPathsOfFilesIn(d, rootDir)
+            if os.path.isdir(f"{dir}/{file}"):
+                filePaths += getFiles(f"{dir}/{file}")
             else:
-                name, ext = os.path.splitext(file)
-                filePaths.append(FileInfo(dir, name, ext[1:], rootDir))
+                name, extension = os.path.splitext(file)
+                filePaths.append(FilePath(dir, name, extension.lower()))
         return filePaths
     except Exception as e:
-        print(e)
+        print(f"Exception occured while reading file in {dir}\n{e}")
         exit(1)
-
-
