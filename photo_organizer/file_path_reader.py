@@ -4,7 +4,7 @@ from misc.FilePath import FilePath
 from typing import List
 
 
-def getFilesInArgDir() -> List[FilePath]:
+def getFilePathsInArgDir() -> List[FilePath]:
     argDir = getDirFromArgs()
     return getFiles(argDir)
 
@@ -26,8 +26,9 @@ def getFiles(dir: str) -> List[FilePath]:
             if os.path.isdir(f"{dir}/{file}"):
                 filePaths += getFiles(f"{dir}/{file}")
             else:
-                name, extension = os.path.splitext(file)
-                filePaths.append(FilePath(dir, name, extension.lower()))
+                name, extensionRaw = os.path.splitext(file)
+                extension = extensionRaw.lower().replace('.', '')
+                filePaths.append(FilePath(dir, name, extension))
         return filePaths
     except Exception as e:
         print(f"Exception occured while reading file in {dir}\n{e}")
