@@ -1,6 +1,6 @@
 import re
 import subprocess 
-from typing import override
+#rom typing import override
 from datetime import datetime
 
 from misc.File import File
@@ -14,7 +14,7 @@ class Video(File):
         File.__init__(self, path)
         
 
-    @override
+    #@override
     def _setDateTime(self):
         try:
             command = ['ffmpeg', '-i', self.path.getFullPath()]
@@ -31,5 +31,7 @@ class Video(File):
             print("error", e)
 
 
-
-
+    def _renameFile(self):
+        print(f"{self.path.getFullPath()} -> {self.getFullNewPath()}")
+        return ""
+    

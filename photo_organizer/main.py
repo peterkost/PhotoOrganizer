@@ -18,7 +18,10 @@ def main():
     filePaths = getFilePathsInArgDir()
     register_heif_opener()
     files = sortFiles(filePaths)
-    [print(f"{x}\n  ↳{x.getFullNewPath()}") for x in files]
+
+    for file in files:
+        if type(file).__name__ == "LivePhoto":
+            file._renameFile()
         #pickleFiles(photos=files)
     
     #processedPhotos = generateFoldersFor(files.photos)

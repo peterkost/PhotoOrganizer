@@ -31,6 +31,10 @@ class File:
         raise NotImplemented
     
 
+    def _renameFile(self):
+        raise NotImplemented
+    
+
     def _setNewPath(self):
         if self.dateTime:
             self.newPath = f"{self.path.dir}/{self.dateTime.year}/{self.dateTime.strftime('%m-%B')}"

@@ -6,6 +6,8 @@ from misc.Types import FileType
 from misc.Photo import Photo
 from misc.File import File
 from misc.Photo import Photo
+from misc.Video import Video
+from misc.LivePhoto import LivePhoto
 
 
 # goal -> by the end of this function, each of the files shold have all of the necessary info to be renmaed
@@ -39,12 +41,11 @@ def createFiles(filePaths: List[FilePath]) -> List[File]:
                     otherPath = otherPath
 
         if photoPath and videoPath:
-            print("make live photo")
+            files.append(LivePhoto(photoPath, videoPath))
         elif photoPath:
             files.append(Photo(photoPath))
         elif videoPath:
-            print("make video")
-            pass
+            files.append(Video(videoPath))
         else:
             print(f"Coldn't figure out what to do with paths!\n{pathsWithSameName},{photoPath}, {videoPath}, {otherPath}")
     return files    

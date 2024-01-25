@@ -1,5 +1,5 @@
+#from typing import override
 from PIL import Image
-from typing import override
 from datetime import datetime
 
 from misc.File import File
@@ -11,7 +11,7 @@ class Photo(File):
         File.__init__(self, path)
         
 
-    @override
+    #@override
     def _setDateTime(self):
             try:
                 image = Image.open(self.path.getFullPath())
@@ -21,3 +21,8 @@ class Photo(File):
             except Exception as e:
                 print(f"Error setting date for {self.path.name}", e)
                 self.dateTime = None
+
+
+    def _renameFile(self):
+        print(f"{self.path.getFullPath()} -> {self.getFullNewPath()}")
+        return ""
